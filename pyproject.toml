@@ -6,7 +6,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "isometric"
-version = "0.0.0"
+version = "1.0.7"
 description = "Vectors on an isometric grid."
 readme = "README.rst"
 authors = [
@@ -23,3 +23,7 @@ requires-python = ">=3.11"
 
 [project.license]
 file = "LICENSE.txt"
+
+[projects.urls]
+Source = "https://github.com/johannes-programming/isometric"
+Download = "https://pypi.org/project/isometric/#files"
