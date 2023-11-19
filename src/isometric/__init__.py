@@ -30,6 +30,15 @@ class Description(_typing.NamedTuple):
             return -_math.acos(ratio)
         else:
             return _math.acos(ratio)
+    def __bool__(self):
+        return all(self)
+    def __float__(self):
+        if bool(self):
+            return float('nan')
+        else:
+            return 0.
+    def __int__(self):
+        return int(float(self))
     
 class Vector:
     def tare_x(self):
@@ -93,8 +102,6 @@ class Vector:
         if type(key) is slice:
             return (a for a in self._list())
         raise TypeError
-    def __bool__(self):
-        return all(self)
     def __add__(self, other):
         cls = type(self)
         if type(other) is not cls:
@@ -141,3 +148,13 @@ class Vector:
         return f"{cls.__name__}(projected_abscissa={self.projected_abscissa()}, projected_ordinate={self.projected_ordinate()})"
     def __repr__(self):
         return str(self)
+    def __bool__(self):
+        return self._y or self._z
+    def __float__(self):
+        if bool(self):
+            return float('nan')
+        else:
+            return 0.
+    def __int__(self):
+        return int(float(self))
+        

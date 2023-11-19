@@ -55,6 +55,12 @@ License
 
 This project is licensed under the MIT License.
 
+Links
+-----
+
+* `Download <https://pypi.org/project/isometric/#files>`_
+* `Source <https://github.com/johannes-programming/isometric>`_ 
+
 Credits
 -------
 - Author: Johannes Programming
