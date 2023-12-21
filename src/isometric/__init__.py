@@ -1,6 +1,7 @@
 import math as _math
 import typing as _typing
 
+
 class _Digest(_typing.NamedTuple):
     x: float = 0.0
     y: float = 0.0
@@ -43,20 +44,17 @@ class Vector:
         if amount == 4:
             return cls(self._y, self._z, 0)
         raise NotImplementedError
-    def tare(self, axis=0):
-        axis = {
-            0:0,
-            1:1,
-            2:2,
+    def description(self, tare='x'):
+        tare = {
             'x':0,
             'y':1,
             'z':2,
-        }[axis]
-        if axis == 0:
+        }[tare]
+        if tare == 0:
             return _Description(0, self._y, self._z)
-        if axis == 1:
+        if tare == 1:
             return _Description(-self._y, 0, self._z - self._y)
-        if axis == 2:
+        if tare == 2:
             return _Description(-self._z, self._y - self._z, 0)
         raise NotImplementedError
     def hflip(self):
@@ -136,19 +134,20 @@ class Vector:
             ans *= self
         return ans
     def __abs__(self):
-        pieces = {abs(a) for a in self.tare()}
-        if len(pieces) < 3:
-            return max(pieces)
+        desc = self.description()
+        values = list(set(desc) - {0})
+        if len(values) == 1:
+            return abs(values.pop())
         return self.digest().radius()
     def __hash__(self):
-        return self.tare().__hash__()
+        return self.description().__hash__()
     def __eq__(self, other):
         cls = type(self)
         if type(other) is not cls:
             return False
-        return self.tare() == self.tare()
+        return self.description() == other.description()
     def __bool__(self):
-        return any(self.tare())
+        return any(self.description())
     def __float__(self):
         return float('nan') if self else .0
     def __int__(self):
