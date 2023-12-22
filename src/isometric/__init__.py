@@ -32,17 +32,17 @@ class Vector:
         cls = type(self)
         if type(amount) is not int:
             raise TypeError
-        ans = self
+        vector = self
         if amount % 2:
             amount += 3
-            ans = -ans
+            vector = -vector
         amount %= 6
         if amount == 0:
-            return cls(0, self._y, self._z)
+            return cls(0, vector._y, vector._z)
         if amount == 2:
-            return cls(self._z, 0, self._y)
+            return cls(vector._z, 0, vector._y)
         if amount == 4:
-            return cls(self._y, self._z, 0)
+            return cls(vector._y, vector._z, 0)
         raise NotImplementedError
     def description(self, tare='x'):
         tare = {
