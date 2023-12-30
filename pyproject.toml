@@ -6,7 +6,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "isometric"
-version = "1.3.2"
+version = "1.3.3"
 description = "Vectors on an isometric grid."
 readme = "README.rst"
 authors = [

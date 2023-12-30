@@ -2,6 +2,12 @@ import math as _math
 import typing as _typing
 
 
+def _int(value):
+    ans = int(value)
+    if ans != value:
+        raise ValueError(value)
+    return ans
+
 class _Description(_typing.NamedTuple):
     x: int = 0
     y: int = 0
@@ -13,7 +19,7 @@ class _Digest(_typing.NamedTuple):
     x: float = 0.0
     y: float = 0.0
     def radius(self) -> float:
-        return ((a ** 2) for a in self) ** .5
+        return sum((a ** 2) for a in self) ** .5
     def angle(self) -> float:
         try:
             ratio = self.x / self.radius()
@@ -48,12 +54,12 @@ class Vector:
     def __bool__(self):
         return any(self.description())
 
-    def __div__(self, other):
+    def __truediv__(self, other):
         cls = type(self)
         return cls(
             0, 
-            self._y / other, 
-            self._z / other,
+            _int(self._y / other), 
+            _int(self._z / other),
         )
 
     def __eq__(self, other):
@@ -72,7 +78,7 @@ class Vector:
         desc = _Description(*args, **kwargs)
         for a in desc:
             if type(a) is not int:
-                raise TypeError
+                raise TypeError(a)
         self._y = desc.y - desc.x
         self._z = desc.z - desc.x
 
@@ -98,11 +104,11 @@ class Vector:
         cls = type(self)
         return cls(0, -self._y, -self._z)
 
-    def __pow__(self, other):
+    def __pow__(self, other:int):
         if type(other) is not int:
-            raise TypeError
+            raise TypeError(other)
         if other < 0:
-            raise ValueError
+            raise ValueError(other)
         ans = 1
         for i in range(other):
             ans *= self
@@ -168,10 +174,10 @@ class Vector:
         v, w = vectors
         return (v._y * w._z) == (v._z * w._y)
     
-    def rotate(self, amount):
+    def rotate(self, amount:int):
         cls = type(self)
         if type(amount) is not int:
-            raise TypeError
+            raise TypeError(amount)
         vector = self
         if amount % 2:
             amount += 3
