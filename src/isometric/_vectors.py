@@ -1,18 +1,27 @@
-import math 
-import typing 
+import math
+import typing
 
 __all__ = ['Vector']
 
-def _int(value) -> int:
-    ans = int(value)
-    if ans != value:
-        raise ValueError(value)
+
+
+
+def _div(a, b) -> int:
+    ans, remainder = divmod(a, b)
+    if type(ans) is not int:
+        raise TypeError(ans)
+    if remainder:
+        raise ValueError(remainder)
     return ans
+
+
+
 
 class _Description(typing.NamedTuple):
     x: int = 0
     y: int = 0
     z: int = 0
+
 
 
 
@@ -32,8 +41,6 @@ class _Digest(typing.NamedTuple):
         return ans
 
     
-
-
 
 
 class Vector:
@@ -56,15 +63,6 @@ class Vector:
 
     def __bool__(self) -> bool:
         return any(self.description())
-
-    def __truediv__(self, other) -> typing.Self:
-        cls = type(self)
-        ans = cls(
-            0, 
-            _int(self._y / other), 
-            _int(self._z / other),
-        )
-        return ans
 
     def __eq__(self, other) -> bool:
         cls = type(self)
@@ -129,7 +127,12 @@ class Vector:
     def __sub__(self, other) -> typing.Self:
         return self + (-other)
 
-
+    def __truediv__(self, other) -> typing.Self:
+        cls = type(self)
+        y = _div(self._y, other)
+        z = _div(self._z, other)
+        ans = cls(0, y, z)
+        return ans
 
 
     #   public
